@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REUNITE | PES University Campus Lost & Found System</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .pes-navy { background-color: #0d2847; }
+        .pes-navy-text { color: #0d2847; }
+        .pes-gold { background-color: #e59819; }
+        .pes-gold-text { color: #d97706; }
+        .badge-score-high { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .badge-score-med { background-color: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Top University Banner -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-1.5 px-4 flex justify-between items-center border-b border-slate-800">
+        <div class="flex items-center space-x-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span class="font-medium">PES UNIVERSITY • Electronic City Campus</span>
+            <span class="text-slate-500">|</span>
+            <span>UE23CS351A – DBMS Mini Project</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span>Team 10: <strong class="text-white">Pranay Shah</strong> (PES2UG24CS366) &amp; <strong class="text-white">Pradyumna P</strong> (PES2UG24CS359)</span>
+            <span class="text-slate-500">|</span>
+            <span>Guide: <strong class="text-slate-200">Dr. Shilpa S</strong></span>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="pes-navy text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand / Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+                    <div class="w-10 h-10 rounded-lg bg-amber-500 flex items-center justify-center text-slate-950 font-black text-xl shadow">
+                        <i data-lucide="compass" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-1.5">
+                            <span class="font-extrabold text-xl tracking-wider text-white">REUNITE</span>
+                            <span class="text-xs bg-amber-400/20 text-amber-300 border border-amber-400/30 px-1.5 py-0.5 rounded font-mono font-semibold">DBMS v1.0</span>
+                        </div>
+                        <p class="text-xs text-slate-300">Campus Lost &amp; Found Database Platform</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex space-x-1">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3.5 py-2 rounded-md text-sm font-medium transition flex items-center space-x-1.5 bg-slate-800/80 text-amber-400">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button onclick="switchTab('items')" id="nav-items" class="nav-btn px-3.5 py-2 rounded-md text-sm font-medium transition flex items-center space-x-1.5 text-slate-200 hover:text-white hover:bg-slate-800/50">
+                        <i data-lucide="package-search" class="w-4 h-4"></i>
+                        <span>Browse Items</span>
+                    </button>
+                    <button onclick="switchTab('matches')" id="nav-matches" class="nav-btn px-3.5 py-2 rounded-md text-sm font-medium transition flex items-center space-x-1.5 text-slate-200 hover:text-white hover:bg-slate-800/50">
+                        <i data-lucide="git-compare" class="w-4 h-4"></i>
+                        <span>Smart Matches</span>
+                    </button>
+                    <button onclick="switchTab('claims')" id="nav-claims" class="nav-btn px-3.5 py-2 rounded-md text-sm font-medium transition flex items-center space-x-1.5 text-slate-200 hover:text-white hover:bg-slate-800/50">
+                        <i data-lucide="clipboard-check" class="w-4 h-4"></i>
+                        <span>Claims Center</span>
+                    </button>
+                    <button onclick="switchTab('queries')" id="nav-queries" class="nav-btn px-3.5 py-2 rounded-md text-sm font-medium transition flex items-center space-x-1.5 text-slate-200 hover:text-white hover:bg-slate-800/50">
+                        <i data-lucide="terminal" class="w-4 h-4"></i>
+                        <span>DBMS Queries</span>
+                    </button>
+                </nav>
+
+                <!-- Right Side Actions & User Switcher -->
+                <div class="flex items-center space-x-3">
+                    <!-- Report Item Button -->
+                    <button onclick="openReportModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold px-3 py-1.5 rounded-lg text-sm flex items-center space-x-1.5 shadow transition">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span>Report Item</span>
+                    </button>
+
+                    <!-- Notifications Dropdown -->
+                    <div class="relative">
+                        <button onclick="toggleNotifications()" class="relative p-2 rounded-lg hover:bg-slate-800 transition text-slate-200">
+                            <i data-lucide="bell" class="w-5 h-5"></i>
+                            <span id="notif-badge" class="hidden absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-slate-900"></span>
+                        </button>
+                        <!-- Dropdown Panel -->
+                        <div id="notif-panel" class="hidden absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 z-50 text-slate-800">
+                            <div class="px-4 py-2 border-b border-slate-100 flex justify-between items-center">
+                                <h3 class="font-bold text-sm text-slate-900">Notifications</h3>
+                                <button onclick="markAllNotificationsRead()" class="text-xs text-amber-600 hover:underline">Mark all read</button>
+                            </div>
+                            <div id="notif-list" class="max-h-72 overflow-y-auto divide-y divide-slate-100 text-xs">
+                                <div class="p-4 text-center text-slate-400">Loading alerts...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User / Role Switcher -->
+                    <div class="flex items-center space-x-2 pl-2 border-l border-slate-700">
+                        <div class="text-right hidden sm:block">
+                            <div id="current-user-name" class="text-xs font-semibold text-white">Pranay Shah</div>
+                            <div id="current-user-role" class="text-[10px] text-amber-300 uppercase tracking-wider">student</div>
+                        </div>
+                        <select id="user-select" onchange="onUserChange()" class="bg-slate-800 text-white text-xs rounded-lg px-2 py-1.5 border border-slate-700 focus:outline-none focus:ring-1 focus:ring-amber-400">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ============================================================== -->
+        <!-- TAB 1: DASHBOARD OVERVIEW -->
+        <!-- ============================================================== -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            <!-- Hero Welcome Card -->
+            <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-lg relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                    <i data-lucide="shield-check" class="w-64 h-64"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl space-y-3">
+                    <div class="inline-flex items-center space-x-2 bg-amber-500/20 text-amber-300 text-xs font-semibold px-2.5 py-1 rounded-full border border-amber-400/30">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        <span>PES University Intelligent Lost &amp; Found Portal</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Reconnecting Students with their Belongings</h1>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Powered by a normalized relational database engine, automated similarity scoring algorithms, and instant campus notification triggers.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="openReportModal('lost')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold px-4 py-2.5 rounded-lg shadow transition flex items-center space-x-1.5">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                            <span>I Lost Something</span>
+                        </button>
+                        <button onclick="openReportModal('found')" class="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 text-xs font-bold px-4 py-2.5 rounded-lg shadow transition flex items-center space-x-1.5">
+                            <i data-lucide="hand-heart" class="w-4 h-4"></i>
+                            <span>I Found Something</span>
+                        </button>
+                        <button onclick="switchTab('queries')" class="bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/30 text-xs font-bold px-4 py-2.5 rounded-lg shadow transition flex items-center space-x-1.5">
+                            <i data-lucide="database" class="w-4 h-4"></i>
+                            <span>Test DBMS Queries</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Metric Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div class="flex items-center justify-between text-rose-600 mb-2">
+                        <span class="text-xs font-semibold text-slate-500 uppercase">Lost Items</span>
+                        <i data-lucide="help-circle" class="w-5 h-5"></i>
+                    </div>
+                    <div id="stat-lost" class="text-2xl font-black text-slate-900">-</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div class="flex items-center justify-between text-emerald-600 mb-2">
+                        <span class="text-xs font-semibold text-slate-500 uppercase">Found Items</span>
+                        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                    </div>
+                    <div id="stat-found" class="text-2xl font-black text-slate-900">-</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div class="flex items-center justify-between text-indigo-600 mb-2">
+                        <span class="text-xs font-semibold text-slate-500 uppercase">Total Matches</span>
+                        <i data-lucide="git-merge" class="w-5 h-5"></i>
+                    </div>
+                    <div id="stat-matches" class="text-2xl font-black text-slate-900">-</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div class="flex items-center justify-between text-amber-600 mb-2">
+                        <span class="text-xs font-semibold text-slate-500 uppercase">Pending Claims</span>
+                        <i data-lucide="clock" class="w-5 h-5"></i>
+                    </div>
+                    <div id="stat-claims" class="text-2xl font-black text-slate-900">-</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div class="flex items-center justify-between text-sky-600 mb-2">
+                        <span class="text-xs font-semibold text-slate-500 uppercase">Reunited Items</span>
+                        <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                    </div>
+                    <div id="stat-resolved" class="text-2xl font-black text-slate-900">-</div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div class="flex items-center justify-between text-purple-600 mb-2">
+                        <span class="text-xs font-semibold text-slate-500 uppercase">Active Users</span>
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                    <div id="stat-users" class="text-2xl font-black text-slate-900">-</div>
+                </div>
+            </div>
+
+            <!-- Two Column Dashboard Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Recent Items Feed (2 Cols) -->
+                <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+                    <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+                        <div>
+                            <h2 class="font-bold text-slate-900 text-base">Recently Reported Items</h2>
+                            <p class="text-xs text-slate-500">Live feed from academic blocks, library, and campus hotspots</p>
+                        </div>
+                        <button onclick="switchTab('items')" class="text-xs font-semibold text-amber-600 hover:text-amber-700 flex items-center space-x-1">
+                            <span>View All</span>
+                            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                    <div id="dashboard-recent-items" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="text-xs text-slate-400 py-6 text-center col-span-2">Loading recent records...</div>
+                    </div>
+                </div>
+
+                <!-- Live Match Alerts & Campus Quick Links (1 Col) -->
+                <div class="space-y-6">
+                    <!-- Top Match Spotlight -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+                        <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                            <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
+                                <span>High-Confidence Matches</span>
+                            </h3>
+                            <button onclick="switchTab('matches')" class="text-xs text-amber-600 hover:underline">Explore</button>
+                        </div>
+                        <div id="dashboard-spotlight-matches" class="space-y-3">
+                            <div class="text-xs text-slate-400 py-4 text-center">Loading matches...</div>
+                        </div>
+                    </div>
+
+                    <!-- Campus Location Directory -->
+                    <div class="bg-slate-900 rounded-xl p-5 text-white shadow-sm space-y-3">
+                        <h3 class="font-bold text-xs uppercase tracking-wider text-amber-400 flex items-center space-x-1.5">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            <span>Campus Collection Hubs</span>
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Turn in recovered valuables to the nearest campus authority desk:
+                        </p>
+                        <ul class="text-xs space-y-2 text-slate-300">
+                            <li class="flex items-center space-x-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                <span><strong>Main Gate Security Office:</strong> 24/7 Desk</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                <span><strong>Central Library 2nd Floor:</strong> Help Desk</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                                <span><strong>Silver Jubilee Block:</strong> Reception Counter</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 2: BROWSE ITEMS -->
+        <!-- ============================================================== -->
+        <section id="tab-items" class="tab-content hidden space-y-5">
+            <!-- Search & Filter Bar -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-3 items-center justify-between">
+                <div class="relative w-full md:w-96">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+                    <input type="text" id="filter-search" oninput="loadItems()" placeholder="Search items, locations, keywords..." 
+                           class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                    <!-- Type Filter -->
+                    <select id="filter-type" onchange="loadItems()" class="text-xs border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+                        <option value="all">All Item Types</option>
+                        <option value="lost">Lost Only</option>
+                        <option value="found">Found Only</option>
+                    </select>
+
+                    <!-- Category Filter -->
+                    <select id="filter-category" onchange="loadItems()" class="text-xs border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+                        <option value="all">All Categories</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Cards/ID">Cards &amp; IDs</option>
+                        <option value="Stationery">Books &amp; Stationery</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Keys">Keys</option>
+                    </select>
+
+                    <!-- Status Filter -->
+                    <select id="filter-status" onchange="loadItems()" class="text-xs border border-slate-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-1 focus:ring-amber-500">
+                        <option value="all">All Statuses</option>
+                        <option value="open">Open</option>
+                        <option value="matched">Matched</option>
+                        <option value="claimed">Claimed</option>
+                    </select>
+
+                    <button onclick="loadItems()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-lg transition flex items-center space-x-1">
+                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                        <span>Refresh</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Items Grid -->
+            <div id="items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="col-span-3 text-center py-12 text-slate-400">Loading catalog...</div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 3: SMART MATCHES -->
+        <!-- ============================================================== -->
+        <section id="tab-matches" class="tab-content hidden space-y-5">
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                        <i data-lucide="git-compare" class="w-5 h-5 text-indigo-600"></i>
+                        <span>Smart Algorithmic Matches</span>
+                    </h2>
+                    <p class="text-xs text-slate-500">Heuristic similarity engine correlating lost reports and found reports across campus</p>
+                </div>
+                <button onclick="runAutoMatchAll()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow transition flex items-center space-x-1.5">
+                    <i data-lucide="play" class="w-3.5 h-3.5"></i>
+                    <span>Execute Global Auto-Match</span>
+                </button>
+            </div>
+
+            <div id="matches-container" class="space-y-4">
+                <div class="text-center py-12 text-slate-400">Loading matches...</div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 4: CLAIMS CENTER -->
+        <!-- ============================================================== -->
+        <section id="tab-claims" class="tab-content hidden space-y-5">
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                        <i data-lucide="clipboard-check" class="w-5 h-5 text-emerald-600"></i>
+                        <span>Claims Verification &amp; Resolution</span>
+                    </h2>
+                    <p class="text-xs text-slate-500">Security and administrative workflow for ownership validation and item handovers</p>
+                </div>
+                <div class="text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-200">
+                    Active Role: <span class="font-bold text-slate-900" id="claims-role-indicator">student</span>
+                </div>
+            </div>
+
+            <div id="claims-container" class="space-y-3">
+                <div class="text-center py-12 text-slate-400">Loading claims...</div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 5: ACADEMIC DBMS QUERIES -->
+        <!-- ============================================================== -->
+        <section id="tab-queries" class="tab-content hidden space-y-6">
+            <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-6 rounded-2xl shadow-md space-y-2">
+                <div class="flex items-center space-x-2 text-amber-400 text-xs font-bold uppercase tracking-wider">
+                    <i data-lucide="terminal" class="w-4 h-4"></i>
+                    <span>UE23CS351A Project Deliverable 7</span>
+                </div>
+                <h2 class="text-xl sm:text-2xl font-black">Live Academic DBMS Query Console</h2>
+                <p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+                    Execute the required academic SQL queries against the live schema: Group By with Aggregates, Update Operations, Delete Operations, Correlated Subqueries, and Nested Subqueries.
+                </p>
+            </div>
+
+            <!-- Query Selector Buttons -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                <button onclick="executeAcademicQuery('7.1')" id="btn-q-7.1" class="query-select-btn p-3.5 rounded-xl border border-slate-200 bg-white hover:border-amber-400 text-left transition shadow-sm">
+                    <div class="text-xs font-bold text-amber-600 mb-1">Query 7.1</div>
+                    <div class="text-xs font-semibold text-slate-900 line-clamp-1">GROUP BY &amp; Aggregate</div>
+                    <div class="text-[10px] text-slate-500">Category &amp; Type statistics</div>
+                </button>
+
+                <button onclick="executeAcademicQuery('7.2')" id="btn-q-7.2" class="query-select-btn p-3.5 rounded-xl border border-slate-200 bg-white hover:border-amber-400 text-left transition shadow-sm">
+                    <div class="text-xs font-bold text-indigo-600 mb-1">Query 7.2</div>
+                    <div class="text-xs font-semibold text-slate-900 line-clamp-1">UPDATE Operation</div>
+                    <div class="text-[10px] text-slate-500">Sync status on approval</div>
+                </button>
+
+                <button onclick="executeAcademicQuery('7.3')" id="btn-q-7.3" class="query-select-btn p-3.5 rounded-xl border border-slate-200 bg-white hover:border-amber-400 text-left transition shadow-sm">
+                    <div class="text-xs font-bold text-rose-600 mb-1">Query 7.3</div>
+                    <div class="text-xs font-semibold text-slate-900 line-clamp-1">DELETE Operation</div>
+                    <div class="text-[10px] text-slate-500">Purge rejected claims</div>
+                </button>
+
+                <button onclick="executeAcademicQuery('7.4')" id="btn-q-7.4" class="query-select-btn p-3.5 rounded-xl border border-slate-200 bg-white hover:border-amber-400 text-left transition shadow-sm">
+                    <div class="text-xs font-bold text-emerald-600 mb-1">Query 7.4</div>
+                    <div class="text-xs font-semibold text-slate-900 line-clamp-1">CORRELATED Subquery</div>
+                    <div class="text-[10px] text-slate-500">Score &gt; category average</div>
+                </button>
+
+                <button onclick="executeAcademicQuery('7.5')" id="btn-q-7.5" class="query-select-btn p-3.5 rounded-xl border border-slate-200 bg-white hover:border-amber-400 text-left transition shadow-sm">
+                    <div class="text-xs font-bold text-purple-600 mb-1">Query 7.5</div>
+                    <div class="text-xs font-semibold text-slate-900 line-clamp-1">NESTED Subquery</div>
+                    <div class="text-[10px] text-slate-500">Open items without claims</div>
+                </button>
+            </div>
+
+            <!-- Query Execution Viewer -->
+            <div id="query-result-box" class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 pb-3 border-b border-slate-100">
+                    <div>
+                        <h3 id="query-title" class="font-bold text-slate-900 text-base">Select an Academic Query Above</h3>
+                        <p id="query-desc" class="text-xs text-slate-500">The raw SQL query and execution dataset will be displayed in real time.</p>
+                    </div>
+                    <span id="query-pill" class="text-xs font-mono font-semibold px-2.5 py-1 rounded bg-slate-100 text-slate-700 w-fit">Ready</span>
+                </div>
+
+                <!-- SQL Code Box -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold text-slate-600 flex items-center space-x-1">
+                        <i data-lucide="code" class="w-3.5 h-3.5"></i>
+                        <span>Structured Query Language (SQL):</span>
+                    </label>
+                    <pre id="query-sql-view" class="bg-slate-900 text-amber-300 text-xs p-4 rounded-xl font-mono overflow-x-auto">-- Click any query button to execute live SQL...</pre>
+                </div>
+
+                <!-- Results Table -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-semibold text-slate-600 flex items-center space-x-1">
+                        <i data-lucide="table" class="w-3.5 h-3.5"></i>
+                        <span>Execution Results:</span>
+                    </label>
+                    <div id="query-table-container" class="overflow-x-auto border border-slate-200 rounded-xl max-h-96">
+                        <div class="p-6 text-center text-xs text-slate-400">Execution output table will render here.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================================== -->
+    <!-- MODAL: REPORT ITEM -->
+    <!-- ============================================================== -->
+    <div id="report-modal" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-600 flex items-center justify-center font-bold">
+                        <i data-lucide="plus" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Report Campus Item</h3>
+                        <p class="text-xs text-slate-500">Stored Procedure will auto-detect matching candidates</p>
+                    </div>
+                </div>
+                <button onclick="closeReportModal()" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="report-form" onsubmit="submitItemReport(event)" class="space-y-4 text-xs">
+                <!-- Type Selection -->
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Report Classification</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="item_type" value="lost" checked class="text-amber-500 focus:ring-amber-400">
+                            <span class="font-semibold text-rose-600">Lost Item (I mislaid it)</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border border-slate-200 cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="item_type" value="found" class="text-amber-500 focus:ring-amber-400">
+                            <span class="font-semibold text-emerald-600">Found Item (I discovered it)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Item Name -->
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Item Title / Model *</label>
+                    <input type="text" id="report-name" required placeholder="e.g. Dell XPS 15 Laptop, Casio 991CW, Student ID" 
+                           class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Category *</label>
+                    <select id="report-category" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none bg-white">
+                        <option value="Electronics">Electronics (Laptops, Phones, Headphones, Chargers)</option>
+                        <option value="Cards/ID">Cards &amp; Identification (PES ID, Driver License, ATM)</option>
+                        <option value="Stationery">Books &amp; Stationery (Calculators, Notebooks, Pouches)</option>
+                        <option value="Accessories">Personal Accessories (Bottles, Umbrellas, Watches)</option>
+                        <option value="Keys">Keys (Two-Wheeler, Hostel Room, Car)</option>
+                    </select>
+                </div>
+
+                <!-- Location -->
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Campus Location *</label>
+                    <input type="text" id="report-location" required placeholder="e.g. Central Library Floor 2, Silver Jubilee Block 405" 
+                           class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                </div>
+
+                <!-- Detailed Description -->
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Distinguishing Characteristics / Notes</label>
+                    <textarea id="report-desc" rows="3" placeholder="Provide distinct stickers, scratches, colors, case details, or engravings..." 
+                              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="pt-2 flex justify-end space-x-2">
+                    <button type="button" onclick="closeReportModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 transition">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg shadow transition flex items-center space-x-1.5">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                        <span>Register &amp; Correlate</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-auto py-4 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>
+                <strong>REUNITE</strong> • Database Management Systems Mini-Project • PES University (2026)
+            </div>
+            <div>
+                Developed by Team 10: <span class="text-slate-800 font-semibold">Pranay Shah</span> &amp; <span class="text-slate-800 font-semibold">Pradyumna P</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App JavaScript Logic -->
+    <script>
+        let currentUser = null;
+        let allUsers = [];
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-800/80', 'text-amber-400');
+                btn.classList.add('text-slate-200');
+            });
+
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            if (activeTab) activeTab.classList.remove('hidden');
+
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-200');
+                activeNav.classList.add('bg-slate-800/80', 'text-amber-400');
+            }
+
+            if (tabId === 'dashboard') loadDashboard();
+            if (tabId === 'items') loadItems();
+            if (tabId === 'matches') loadMatches();
+            if (tabId === 'claims') loadClaims();
+            if (tabId === 'queries') executeAcademicQuery('7.1');
+
+            lucide.createIcons();
+        }
+
+        // Initialize Application
+        async function init() {
+            await loadUsers();
+            await loadDashboard();
+            await loadNotifications();
+            lucide.createIcons();
+        }
+
+        // Fetch Users and populate dropdown
+        async function loadUsers() {
+            try {
+                const res = await fetch('/api/users');
+                allUsers = await res.json();
+                const select = document.getElementById('user-select');
+                select.innerHTML = '';
+                allUsers.forEach(u => {
+                    const opt = document.createElement('option');
+                    opt.value = u.user_id;
+                    opt.textContent = `${u.name} (${u.role})`;
+                    select.appendChild(opt);
+                });
+
+                currentUser = allUsers[0];
+                updateUserDisplay();
+            } catch (err) {
+                console.error('Error fetching users:', err);
+            }
+        }
+
+        function onUserChange() {
+            const select = document.getElementById('user-select');
+            const selectedId = parseInt(select.value, 10);
+            currentUser = allUsers.find(u => u.user_id === selectedId) || allUsers[0];
+            updateUserDisplay();
+            loadNotifications();
+            loadClaims();
+        }
+
+        function updateUserDisplay() {
+            if (!currentUser) return;
+            document.getElementById('current-user-name').textContent = currentUser.name;
+            document.getElementById('current-user-role').textContent = currentUser.role;
+            const claimsRole = document.getElementById('claims-role-indicator');
+            if (claimsRole) claimsRole.textContent = `${currentUser.name} (${currentUser.role})`;
+        }
+
+        // Load Dashboard Metrics
+        async function loadDashboard() {
+            try {
+                const statsRes = await fetch('/api/stats');
+                const stats = await statsRes.json();
+                document.getElementById('stat-lost').textContent = stats.totalLost;
+                document.getElementById('stat-found').textContent = stats.totalFound;
+                document.getElementById('stat-matches').textContent = stats.totalMatches;
+                document.getElementById('stat-claims').textContent = stats.activeClaims;
+                document.getElementById('stat-resolved').textContent = stats.resolvedItems;
+                document.getElementById('stat-users').textContent = stats.totalUsers;
+
+                // Load Recent Items preview
+                const itemsRes = await fetch('/api/items');
+                const items = await itemsRes.json();
+                const recentContainer = document.getElementById('dashboard-recent-items');
+                recentContainer.innerHTML = '';
+
+                items.slice(0, 4).forEach(item => {
+                    const isLost = item.item_type === 'lost';
+                    const card = document.createElement('div');
+                    card.className = "p-3.5 rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100/80 transition space-y-2";
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${isLost ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}">
+                                ${item.item_type}
+                            </span>
+                            <span class="text-[10px] text-slate-500 font-medium">${item.category}</span>
+                        </div>
+                        <h4 class="font-bold text-xs text-slate-900 line-clamp-1">${item.item_name}</h4>
+                        <p class="text-[11px] text-slate-500 line-clamp-1">${item.location}</p>
+                    `;
+                    recentContainer.appendChild(card);
+                });
+
+                // Load Spotlight Matches
+                const matchRes = await fetch('/api/matches');
+                const matches = await matchRes.json();
+                const spotContainer = document.getElementById('dashboard-spotlight-matches');
+                spotContainer.innerHTML = '';
+
+                matches.slice(0, 3).forEach(m => {
+                    const item = document.createElement('div');
+                    item.className = "p-3 rounded-lg border border-slate-100 bg-slate-50 space-y-1.5";
+                    item.innerHTML = `
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-800 line-clamp-1">${m.lost_item_name}</span>
+                            <span class="font-bold text-xs ${m.similarity_score >= 85 ? 'text-emerald-600' : 'text-amber-600'}">${m.similarity_score}%</span>
+                        </div>
+                        <div class="text-[11px] text-slate-500 flex items-center space-x-1">
+                            <i data-lucide="arrow-right" class="w-3 h-3 text-slate-400"></i>
+                            <span class="line-clamp-1">${m.found_item_name}</span>
+                        </div>
+                    `;
+                    spotContainer.appendChild(item);
+                });
+
+                lucide.createIcons();
+            } catch (err) {
+                console.error('Error loading dashboard:', err);
+            }
+        }
+
+        // Load Items with Filters
+        async function loadItems() {
+            try {
+                const type = document.getElementById('filter-type')?.value || 'all';
+                const category = document.getElementById('filter-category')?.value || 'all';
+                const status = document.getElementById('filter-status')?.value || 'all';
+                const search = document.getElementById('filter-search')?.value || '';
+
+                const query = new URLSearchParams({ type, category, status, search });
+                const res = await fetch(`/api/items?${query.toString()}`);
+                const items = await res.json();
+
+                const grid = document.getElementById('items-grid');
+                grid.innerHTML = '';
+
+                if (items.length === 0) {
+                    grid.innerHTML = `<div class="col-span-3 text-center py-12 text-slate-400">No items match your filter criteria.</div>`;
+                    return;
+                }
+
+                items.forEach(item => {
+                    const isLost = item.item_type === 'lost';
+                    const isClaimed = item.status === 'claimed';
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between space-y-3 hover:shadow-md transition";
+                    card.innerHTML = `
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${isLost ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}">
+                                    ${item.item_type}
+                                </span>
+                                <span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                                    ${item.category}
+                                </span>
+                            </div>
+                            <h3 class="font-bold text-sm text-slate-900">${item.item_name}</h3>
+                            <p class="text-xs text-slate-600 line-clamp-2">${item.description || 'No detailed description provided.'}</p>
+                            <div class="text-[11px] text-slate-500 flex items-center space-x-1 pt-1">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                                <span>${item.location}</span>
+                            </div>
+                            <div class="text-[10px] text-slate-400">Reported by: ${item.reporter_name} (${item.reporter_role})</div>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100 flex justify-between items-center">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${isClaimed ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
+                                Status: ${item.status}
+                            </span>
+                            ${!isClaimed && isLost ? `
+                                <button onclick="claimItem(${item.item_id})" class="text-xs font-semibold bg-amber-500 hover:bg-amber-600 text-slate-950 px-2.5 py-1 rounded transition">
+                                    Claim Item
+                                </button>
+                            ` : ''}
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                lucide.createIcons();
+            } catch (err) {
+                console.error('Error fetching items:', err);
+            }
+        }
+
+        // Submit Item Report
+        async function submitItemReport(e) {
+            e.preventDefault();
+            const type = document.querySelector('input[name="item_type"]:checked').value;
+            const name = document.getElementById('report-name').value;
+            const category = document.getElementById('report-category').value;
+            const location = document.getElementById('report-location').value;
+            const description = document.getElementById('report-desc').value;
+
+            try {
+                const res = await fetch('/api/items', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: currentUser ? currentUser.user_id : 1,
+                        item_name: name,
+                        category,
+                        location,
+                        description,
+                        item_type: type
+                    })
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    alert(`Item recorded successfully! Auto-matching identified ${data.matches_found} candidate match(es).`);
+                    closeReportModal();
+                    loadDashboard();
+                    loadItems();
+                    loadNotifications();
+                } else {
+                    alert(`Error: ${data.error}`);
+                }
+            } catch (err) {
+                alert(`Error submitting report: ${err.message}`);
+            }
+        }
+
+        // Load Matches
+        async function loadMatches() {
+            try {
+                const res = await fetch('/api/matches');
+                const matches = await res.json();
+                const container = document.getElementById('matches-container');
+                container.innerHTML = '';
+
+                if (matches.length === 0) {
+                    container.innerHTML = `<div class="bg-white p-8 rounded-xl border border-slate-200 text-center text-slate-400">No active matches found.</div>`;
+                    return;
+                }
+
+                matches.forEach(m => {
+                    const isHigh = m.similarity_score >= 85;
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4";
+                    card.innerHTML = `
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 pb-3 border-b border-slate-100">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs font-mono font-bold text-slate-400">Match #${m.match_id}</span>
+                                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full ${isHigh ? 'badge-score-high' : 'badge-score-med'}">
+                                    ${m.similarity_score}% Heuristic Confidence
+                                </span>
+                                <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-600">
+                                    ${m.match_status}
+                                </span>
+                            </div>
+                            <span class="text-xs text-slate-500 font-medium">Category: <strong>${m.category}</strong></span>
+                        </div>
+
+                        <!-- Side by Side Comparison -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Lost Item Card -->
+                            <div class="p-3.5 rounded-lg bg-rose-50/50 border border-rose-100 space-y-1.5">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-rose-700 bg-rose-100 px-1.5 py-0.5 rounded">Lost Report</span>
+                                <h4 class="font-bold text-slate-900 text-sm">${m.lost_item_name}</h4>
+                                <div class="text-xs text-slate-600 flex items-center space-x-1">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                                    <span>${m.lost_location}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500">Reported by: ${m.lost_owner_name} (${m.lost_owner_email})</div>
+                            </div>
+
+                            <!-- Found Item Card -->
+                            <div class="p-3.5 rounded-lg bg-emerald-50/50 border border-emerald-100 space-y-1.5">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">Found Item</span>
+                                <h4 class="font-bold text-slate-900 text-sm">${m.found_item_name}</h4>
+                                <div class="text-xs text-slate-600 flex items-center space-x-1">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                                    <span>${m.found_location}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500">Secured by: ${m.finder_name} (${m.finder_email})</div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end space-x-2 pt-1">
+                            <button onclick="claimItem(${m.found_item_id})" class="text-xs font-semibold bg-amber-500 hover:bg-amber-600 text-slate-950 px-3 py-1.5 rounded-lg transition flex items-center space-x-1">
+                                <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+                                <span>Claim Found Believed Item</span>
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+                lucide.createIcons();
+            } catch (err) {
+                console.error('Error loading matches:', err);
+            }
+        }
+
+        // Run Global Auto Match
+        async function runAutoMatchAll() {
+            try {
+                const res = await fetch('/api/matches/auto-match-all', { method: 'POST' });
+                const data = await res.json();
+                alert(`Auto-match complete! Created ${data.new_matches} new match relationship(s).`);
+                loadMatches();
+                loadDashboard();
+            } catch (err) {
+                alert(`Error running match engine: ${err.message}`);
+            }
+        }
+
+        // Load Claims
+        async function loadClaims() {
+            try {
+                const res = await fetch('/api/claims');
+                const claims = await res.json();
+                const container = document.getElementById('claims-container');
+                container.innerHTML = '';
+
+                if (claims.length === 0) {
+                    container.innerHTML = `<div class="bg-white p-8 rounded-xl border border-slate-200 text-center text-slate-400">No claim records currently filed.</div>`;
+                    return;
+                }
+
+                claims.forEach(c => {
+                    const isPending = c.claim_status === 'pending';
+                    const isApproved = c.claim_status === 'approved';
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-xl border border-slate-200 shadow-sm p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3";
+                    card.innerHTML = `
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-bold text-sm text-slate-900">${c.item_name}</span>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                                    isApproved ? 'bg-emerald-100 text-emerald-800' :
+                                    isPending ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'
+                                }">
+                                    ${c.claim_status}
+                                </span>
+                            </div>
+                            <div class="text-xs text-slate-500">
+                                Claimant: <strong>${c.claimant_name}</strong> (${c.claimant_email}) • Role: ${c.claimant_role}
+                            </div>
+                            <div class="text-[11px] text-slate-400">Location: ${c.location} | Category: ${c.category}</div>
+                        </div>
+
+                        <!-- Admin Actions -->
+                        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
+                            ${isPending ? `
+                                <button onclick="resolveClaim(${c.claim_id}, 'approved')" class="text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg shadow-sm transition">
+                                    Approve &amp; Reconcile
+                                </button>
+                                <button onclick="resolveClaim(${c.claim_id}, 'rejected')" class="text-xs font-semibold bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded-lg shadow-sm transition">
+                                    Reject
+                                </button>
+                            ` : `
+                                <span class="text-xs text-slate-400 italic">Resolved</span>
+                            `}
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+                lucide.createIcons();
+            } catch (err) {
+                console.error('Error loading claims:', err);
+            }
+        }
+
+        // Claim an Item
+        async function claimItem(itemId) {
+            if (!currentUser) {
+                alert('Please select a user identity first.');
+                return;
+            }
+            if (confirm(`Submit formal ownership claim for item ID #${itemId}?`)) {
+                try {
+                    const res = await fetch('/api/claims', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ user_id: currentUser.user_id, item_id: itemId })
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                        alert('Claim submitted for security verification!');
+                        switchTab('claims');
+                    } else {
+                        alert(`Claim submission rejected: ${data.error}`);
+                    }
+                } catch (err) {
+                    alert(`Error: ${err.message}`);
+                }
+            }
+        }
+
+        // Resolve Claim (Approve/Reject)
+        async function resolveClaim(claimId, decision) {
+            try {
+                const res = await fetch(`/api/claims/${claimId}/resolve`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ decision })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    alert(data.message);
+                    loadClaims();
+                    loadDashboard();
+                    loadNotifications();
+                } else {
+                    alert(`Resolution failed: ${data.error}`);
+                }
+            } catch (err) {
+                alert(`Error: ${err.message}`);
+            }
+        }
+
+        // Execute Academic DBMS Queries (7.1 - 7.5)
+        async function executeAcademicQuery(queryId) {
+            document.querySelectorAll('.query-select-btn').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-amber-500', 'border-amber-500');
+            });
+            const selBtn = document.getElementById(`btn-q-${queryId}`);
+            if (selBtn) selBtn.classList.add('ring-2', 'ring-amber-500', 'border-amber-500');
+
+            try {
+                const res = await fetch(`/api/queries/${queryId}`);
+                const data = await res.json();
+
+                document.getElementById('query-title').textContent = data.title;
+                document.getElementById('query-desc').textContent = data.description;
+                document.getElementById('query-pill').textContent = `Query ${data.queryId} Executed`;
+                document.getElementById('query-sql-view').textContent = data.sql;
+
+                const tableContainer = document.getElementById('query-table-container');
+                const results = data.results || [];
+
+                if (results.length === 0) {
+                    tableContainer.innerHTML = `<div class="p-6 text-center text-xs text-slate-400">Query executed successfully with 0 returned rows.</div>`;
+                    return;
+                }
+
+                // Dynamically build HTML table from query results
+                const keys = Object.keys(results[0]);
+                let tableHtml = `
+                    <table class="min-w-full divide-y divide-slate-200 text-xs text-left">
+                        <thead class="bg-slate-50 text-slate-700 font-semibold uppercase tracking-wider text-[10px]">
+                            <tr>
+                                ${keys.map(k => `<th class="px-3 py-2.5">${k}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 bg-white">
+                            ${results.map(row => `
+                                <tr class="hover:bg-slate-50">
+                                    ${keys.map(k => `<td class="px-3 py-2 text-slate-800">${row[k] !== null ? row[k] : '<em class="text-slate-400">NULL</em>'}</td>`).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+                tableContainer.innerHTML = tableHtml;
+            } catch (err) {
+                alert(`Error executing query ${queryId}: ${err.message}`);
+            }
+        }
+
+        // Notifications Management
+        async function loadNotifications() {
+            if (!currentUser) return;
+            try {
+                const res = await fetch(`/api/notifications?user_id=${currentUser.user_id}`);
+                const data = await res.json();
+                const list = document.getElementById('notif-list');
+                const badge = document.getElementById('notif-badge');
+
+                if (data.unread_count > 0) {
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+
+                list.innerHTML = '';
+                if (data.notifications.length === 0) {
+                    list.innerHTML = `<div class="p-4 text-center text-slate-400">No alerts for this user.</div>`;
+                    return;
+                }
+
+                data.notifications.forEach(n => {
+                    const item = document.createElement('div');
+                    item.className = `p-3 flex justify-between items-start gap-2 ${n.is_read ? 'opacity-60 bg-white' : 'bg-amber-50/50'}`;
+                    item.innerHTML = `
+                        <div class="space-y-1">
+                            <p class="text-slate-800 leading-snug">${n.message}</p>
+                            <span class="text-[10px] text-slate-400">${n.is_read ? 'Read' : 'New notification'}</span>
+                        </div>
+                        ${!n.is_read ? `
+                            <button onclick="markNotificationRead(${n.notification_id})" class="text-[10px] text-amber-600 hover:underline shrink-0">Mark read</button>
+                        ` : ''}
+                    `;
+                    list.appendChild(item);
+                });
+            } catch (err) {
+                console.error('Error loading notifications:', err);
+            }
+        }
+
+        async function markNotificationRead(id) {
+            await fetch(`/api/notifications/${id}/read`, { method: 'PUT' });
+            loadNotifications();
+        }
+
+        async function markAllNotificationsRead() {
+            if (!currentUser) return;
+            await fetch('/api/notifications/mark-all-read', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: currentUser.user_id })
+            });
+            loadNotifications();
+        }
+
+        function toggleNotifications() {
+            const panel = document.getElementById('notif-panel');
+            panel.classList.toggle('hidden');
+        }
+
+        // Modal Controls
+        function openReportModal(defaultType = 'lost') {
+            const radios = document.getElementsByName('item_type');
+            radios.forEach(r => { if (r.value === defaultType) r.checked = true; });
+            document.getElementById('report-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeReportModal() {
+            document.getElementById('report-modal').classList.add('hidden');
+            document.getElementById('report-form').reset();
+        }
+
+        // Run Init on Page Load
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

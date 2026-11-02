@@ -1,0 +1,28 @@
+{
+  "name": "reunite-dbms-pes",
+  "version": "1.0.0",
+  "description": "REUNITE: Campus Lost & Found Management System - PES University UE23CS351A DBMS Project",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js",
+    "test": "node run_tests.js"
+  },
+  "keywords": [
+    "dbms",
+    "pes-university",
+    "sql",
+    "mysql",
+    "sqlite",
+    "lost-and-found",
+    "full-stack"
+  ],
+  "author": "Pranay Shah (PES2UG24CS366) & Pradyumna P (PES2UG24CS359)",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0",
+    "sql.js": "^1.12.0"
+  }
+}

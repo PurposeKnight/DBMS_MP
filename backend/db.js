@@ -107,7 +107,7 @@ async function initSqlite() {
             (5, 'Rohan Verma', 'rohan.verma@pes.edu', 'student'),
             (6, 'Ananya Iyer', 'ananya.iyer@pes.edu', 'student'),
             (7, 'Suresh Gowda', 'suresh.security@pes.edu', 'staff'),
-            (8, 'Dr. Shilpa S', 'shilpa.cs@pes.edu', 'admin');
+            (8, 'Prof. Sheela Devi', 'sheeladevi.cs@pes.edu', 'admin');
 
             INSERT INTO items (item_id, user_id, item_name, description, category, location, status, item_type) VALUES
             (1, 1, 'Dell XPS 15 Laptop', 'Silver Dell XPS laptop with CS sticker on top cover.', 'Electronics', 'Central Library Floor 2', 'open', 'lost'),

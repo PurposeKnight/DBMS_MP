@@ -5,7 +5,7 @@
 > **Team 10:**  
 > - **Pranay Shah** (PES2UG24CS366)  
 > - **Pradyumna P** (PES2UG24CS359)  
-> **Faculty Guide:** Dr. Shilpa S, Assistant Professor  
+> **Faculty Guide:** Prof. Sheela Devi, Assistant Professor  
 
 ---
 

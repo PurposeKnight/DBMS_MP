@@ -24,7 +24,7 @@
 **Team Number:** TEAM 10  
 
 **Under the Guidance of:**  
-**Dr. Shilpa S**  
+**Prof. Sheela Devi**  
 Assistant Professor  
 Department of Computer Science & Engineering  
 PES University, Bengaluru  
@@ -49,7 +49,7 @@ It is certified that all corrections/suggestions indicated for internal assessme
 <br><br><br>
 
 -------------------------------------------------- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --------------------------------------------------  
-**Dr. Shilpa S** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Dr. Sandesh B J**  
+**Prof. Sheela Devi** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Dr. Sandesh B J**  
 Assistant Professor, Dept. of CSE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Professor & Chairperson, Dept. of CSE  
 PES University &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PES University  
 
@@ -59,7 +59,7 @@ PES University &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
 
 ## DECLARATION
 
-We hereby declare that the DBMS Project entitled **"REUNITE: Campus Lost and Found Management System"** has been carried out by us under the guidance of **Dr. Shilpa S**, Assistant Professor, and submitted in partial fulfilment of the course requirements for the award of degree of *Bachelor of Technology in Computer Science and Engineering* of PES University, Bengaluru during the academic semester **AUG – DEC 2026**.
+We hereby declare that the DBMS Project entitled **"REUNITE: Campus Lost and Found Management System"** has been carried out by us under the guidance of **Prof. Sheela Devi**, Assistant Professor, and submitted in partial fulfilment of the course requirements for the award of degree of *Bachelor of Technology in Computer Science and Engineering* of PES University, Bengaluru during the academic semester **AUG – DEC 2026**.
 
 We also declare that this report represents our own original work and has not been submitted previously to any other university or institution for the award of any degree, diploma, or certificate.
 
@@ -77,7 +77,7 @@ We also declare that this report represents our own original work and has not be
 
 ## ACKNOWLEDGEMENT
 
-We would like to express our deepest gratitude to our faculty guide **Dr. Shilpa S**, Assistant Professor, Department of Computer Science and Engineering, PES University, for her valuable guidance, constructive critique, and encouragement throughout the ideation, schema design, and implementation of this UE23CS351A – DBMS Project.
+We would like to express our deepest gratitude to our faculty guide **Prof. Sheela Devi**, Assistant Professor, Department of Computer Science and Engineering, PES University, for her valuable guidance, constructive critique, and encouragement throughout the ideation, schema design, and implementation of this UE23CS351A – DBMS Project.
 
 We take this opportunity to thank **Dr. Sandesh B J**, Professor and Chairperson, Department of Computer Science and Engineering, PES University, for providing state-of-the-art facilities and continuous institutional support.
 
@@ -508,7 +508,7 @@ INSERT INTO users (user_id, name, email, role) VALUES
 (5, 'Rohan Verma', 'rohan.verma@pes.edu', 'student'),
 (6, 'Ananya Iyer', 'ananya.iyer@pes.edu', 'student'),
 (7, 'Suresh Gowda', 'suresh.security@pes.edu', 'staff'),
-(8, 'Dr. Shilpa S', 'shilpa.cs@pes.edu', 'admin');
+(8, 'Prof. Sheela Devi', 'sheeladevi.cs@pes.edu', 'admin');
 
 -- 2. Populate Items
 INSERT INTO items (item_id, user_id, item_name, description, category, location, status, item_type) VALUES
@@ -954,6 +954,6 @@ The project demonstrates:
 **Repository Name:** `REUNITE-DBMS-Project`  
 **Course Code:** UE23CS351A  
 **Team 10:** Pranay Shah (PES2UG24CS366), Pradyumna P (PES2UG24CS359)  
-**Guide:** Dr. Shilpa S, Assistant Professor  
+**Guide:** Prof. Sheela Devi, Assistant Professor  
 **GitHub URL:** `https://github.com/PurposeKnight/DBMS_MP.git`  
 

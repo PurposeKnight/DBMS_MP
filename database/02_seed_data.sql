@@ -27,7 +27,7 @@ INSERT INTO users (user_id, name, email, role) VALUES
 (5, 'Rohan Verma', 'rohan.verma@pes.edu', 'student'),
 (6, 'Ananya Iyer', 'ananya.iyer@pes.edu', 'student'),
 (7, 'Suresh Gowda', 'suresh.security@pes.edu', 'staff'),
-(8, 'Dr. Shilpa S', 'shilpa.cs@pes.edu', 'admin');
+(8, 'Prof. Sheela Devi', 'sheeladevi.cs@pes.edu', 'admin');
 
 -- 2. Insert Items (Lost and Found items)
 INSERT INTO items (item_id, user_id, item_name, description, category, location, status, item_type) VALUES

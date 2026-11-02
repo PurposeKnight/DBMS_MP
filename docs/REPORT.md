@@ -955,4 +955,5 @@ The project demonstrates:
 **Course Code:** UE23CS351A  
 **Team 10:** Pranay Shah (PES2UG24CS366), Pradyumna P (PES2UG24CS359)  
 **Guide:** Dr. Shilpa S, Assistant Professor  
-**GitHub URL:** `https://github.com/pranayshah/REUNITE-DBMS-Project` *(Replace with your GitHub repository URL)*  
+**GitHub URL:** `https://github.com/PurposeKnight/DBMS_MP.git`  
+

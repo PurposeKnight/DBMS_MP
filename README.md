@@ -107,7 +107,7 @@ DBMS/
 
 ### 1. Clone & Install
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/PurposeKnight/DBMS_MP.git
 cd DBMS
 npm install
 ```
@@ -169,3 +169,4 @@ If running directly on a MySQL Server:
 - **Pranay Shah** (SRN: `PES2UG24CS366`)
 - **Pradyumna P** (SRN: `PES2UG24CS359`)
 - **Institution:** PES University, Electronic City Campus, Bengaluru
+

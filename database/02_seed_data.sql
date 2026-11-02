@@ -73,3 +73,4 @@ INSERT INTO notifications (notification_id, user_id, match_id, message, is_read)
 (4, 4, 4, 'A Casio calculator matching your report was turned into Room 302 lost collection.', FALSE),
 (5, 5, 5, 'Your claim on Hydro Flask bottle has been approved. Please collect it from Security Office.', TRUE),
 (6, 6, 6, 'A set of keys matching your bike key was discovered in Basement Parking.', FALSE);
+

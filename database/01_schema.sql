@@ -82,3 +82,4 @@ CREATE INDEX idx_items_item_type ON items(item_type);
 CREATE INDEX idx_claims_status ON claims(claim_status);
 CREATE INDEX idx_matches_score ON matches(similarity_score);
 CREATE INDEX idx_notifications_user_read ON notifications(user_id, is_read);
+

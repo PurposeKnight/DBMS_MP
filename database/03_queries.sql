@@ -200,3 +200,4 @@ SELECT
 FROM claims c
 JOIN users u ON c.user_id = u.user_id
 JOIN items i ON c.item_id = i.item_id;
+
